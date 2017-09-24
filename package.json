@@ -1,0 +1,19 @@
+{
+  "name": "jellydoodle",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/michaelhartmayer/jellydoodle.git"
+  },
+  "author": "Michael Hartmayer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/michaelhartmayer/jellydoodle/issues"
+  },
+  "homepage": "https://github.com/michaelhartmayer/jellydoodle#readme"
+}
