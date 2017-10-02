@@ -5,8 +5,8 @@
   "main": "client.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.min.js",
-    "prestart": "babel client.js --out-dir http/js/ --no-comments --minify && babel server.js --out-dir ./ --out-file server.min.js --no-comments --minify"
+    "start": "babel-node server.js",
+    "prestart": "babel client.js --out-dir http/js/ --no-comments --minify"
   },
   "author": "",
   "license": "ISC",
@@ -17,10 +17,10 @@
     "babel-preset-env": "^1.6.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-latest": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
     "colors": "^1.1.2"
   },
   "dependencies": {
-    "babel-preset-es2015": "^6.24.1",
     "express": "^4.16.1",
     "socketio": "^1.0.0"
   }
