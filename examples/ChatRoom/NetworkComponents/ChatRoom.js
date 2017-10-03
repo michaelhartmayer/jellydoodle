@@ -26,7 +26,7 @@ class ChatRoom extends NetworkComponent {
     }
 }
 
-class ChatRoomServer extends NetworkComponent {
+class ChatRoomServer extends ChatRoom {
     users = []
 
     onSay (from, { message }) {
