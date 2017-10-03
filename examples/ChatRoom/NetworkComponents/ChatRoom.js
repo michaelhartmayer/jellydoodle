@@ -1,79 +1,68 @@
 import NetworkComponent from '../../../src/NetworkComponent';
 
-// server-side state
-const chatRoomStateServer = {
-    private: {
-        admins: []
-    }
-};
-
-/* Client */
 class ChatRoom extends NetworkComponent {
-    state = {
+    name = 'Lobby'
+
+    state: {
         public: {
-            userCount: 0,
-            userNames: [],
-            buffer:    []
-        },
-        shared: {
-            title: 'Room Title'
-        },
-        events: {
-            say: {
-                from:    NetworkComponentType.NetworkComponent,
-                message: NetworkComponentType.HTMLSafeText
-            }
+            title: '',
+            users: []
         }
     }
 
-    willUpdatePublicUserNames (ncid, ) {
-        // update views
+    events: {
+        'say':    ['alias', 'message'],
+        'join':   null,
+        'leave':  null,
+        'notify': ['message']
     }
 
-    sendMessage (user, message) {
-        this.doSay(user, message);
+    onSay (from, { alias, message }) {
+        // update view: alias, message
+    }
+
+    didUpdatePublicState () {
+        // update view: title, users
     }
 }
 
-/* Server */
 class ChatRoomServer extends NetworkComponent {
-    users         = []
-    channelStuard = null
+    users = []
 
-    constructor () {
-        super(arguments);
-
-        // generate a channel stuart who can announce things to the channel
-        this.channelStuard = new ChatUser({
-            alias: 'Channel',
-            admin: true
-        });
+    onSay (from, { message }) {
+        let user = from.findNetworkComponent('User');
+        this.doSay({ alias: user.alias, message });
     }
 
-    announce (message) {
-        this.doSay(this.channelStuard._ncid, message);
+    onJoin (from) {
+        let user = from.findNetworkComponent('User');
+        this.users.push(user);
+        this.updateUsers();
+
+        // notify channel
+        this.doNotify({ message: `${user.alias} has joined.` });
+    }
+
+    onLeave (from) {
+        let user = from.findNetworkComponent('User');
+        this.users = this.users.filter(_ => _ !== user);
+        this.updateUsers();
+
+        // notify channel
+        this.doNotify({ message: `${user.alias} has left.` });
+    }
+
+    willUpdatePublicTitle (from) {
+        let user = from.findNetworkComponent('User');
+
+        // not an admin, don't allow change
+        if (!user.isAdmin()) return false;
     }
 
     updateUsers () {
-        this.setPublicState({
-            userNames: users.map(user => ChatUser(user).name),
-            userCount: users.length
-        });
-    }
-
-    // generated method, from events.say
-    onSay (from, message) {
-        // add the message to the buffer
-        this.setPublicState({
-            buffer: [...buffer, {
-                from: ChatUser.as(from).name,
-                message
-            }]
-        });
+        let users = this.users.map(_ => { alias: _.alias });
+        this.setPublicState({ users });
     }
 }
 
-export default {
-    ChatRoom,
-    ChatRoomServer: ChatRoomServer.withState(chatRoomStateServer)
-};
+export default { ChatRoom, ChatRoomServer };
