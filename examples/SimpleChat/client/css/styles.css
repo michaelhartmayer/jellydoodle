@@ -1,0 +1,53 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: 1em;
+    font-weight: normal;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+* {
+    font-family: 'Libre Baskerville', serif;   
+}
+
+h1 {
+    text-align: center;
+    font-size: 3em;
+    margin: 10px;
+    padding: 10px;
+    border-bottom: 1px solid #dedede;
+}
+
+.buffer {
+    height: 600px;
+    overflow-y: scroll;
+    font-size: 2em;
+    margin: 10px;
+    padding: 10px;
+    border-left: 10px solid #dedede;
+    border-right: 10px solid #dedede;
+}
+
+.chat-text {
+    font-size: 0.6em;
+    border-bottom: 1px dotted #fedefe;
+    padding: 20px 0;
+}
+
+.message {
+    margin: 10px;
+    padding: 10px;
+    border-top: 1px solid #dedede;
+    border-bottom: 1px solid #dedede;
+}
+
+#input {
+    display: block;
+    width: 100%;
+    padding: 10px;
+}
