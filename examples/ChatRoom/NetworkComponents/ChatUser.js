@@ -1,20 +1,18 @@
 import NetworkComponent from '../../../src/NetworkComponent';
 
 class ChatUser extends NetworkComponent {
-    state: {
-        public: {
-            admin: false
-        },
-        shared: {
-            alias: 'Unknown'
-        }
+    public = {
+        username: null
     }
+}
 
-    constructor(settings) {
-        super(arguments);
+class ChatUserS extends ChatUser {
+    private = {
+        admin: false
     }
 }
 
 export default {
-    ChatUser
-};
+    ChatUser,
+    ChatUserS
+}

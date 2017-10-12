@@ -1,68 +1,41 @@
-import NetworkComponent from '../../../src/NetworkComponent';
-
 class ChatRoom extends NetworkComponent {
-    name = 'Lobby'
+    events = ['userJoined', 'userLeft', 'message']
 
-    state: {
-        public: {
-            title: '',
-            users: []
-        }
+    public = {
+        title: 'Chat Room',
+        userCount: 0
     }
 
-    events: {
-        'say':    ['alias', 'message'],
-        'join':   null,
-        'leave':  null,
-        'notify': ['message']
+    mount = {
+        users: NetworkContainer({ 
+            of:       ChatUser,
+            max:      10,
+            onAdd:    this.chatUserJoined,
+            onRemove: this.chatUserLeft
+        })
     }
 
-    onSay (from, { alias, message }) {
-        // update view: alias, message
+    chatUserJoined ({ countainer, item }) {
+        // update view: item.alias + has joined
     }
 
-    didUpdatePublicState () {
-        // update view: title, users
-    }
-}
-
-class ChatRoomServer extends ChatRoom {
-    users = []
-
-    onSay (from, { message }) {
-        let user = from.findNetworkComponent('User');
-        this.doSay({ alias: user.alias, message });
+    chatUserLeft ({ countainer, item }) {
+        // update view: item.alias + has left
     }
 
-    onJoin (from) {
-        let user = from.findNetworkComponent('User');
-        this.users.push(user);
-        this.updateUsers();
-
-        // notify channel
-        this.doNotify({ message: `${user.alias} has joined.` });
+    join (ncUser) {
+        return this.mountToUsers(ncUser);
     }
 
-    onLeave (from) {
-        let user = from.findNetworkComponent('User');
-        this.users = this.users.filter(_ => _ !== user);
-        this.updateUsers();
-
-        // notify channel
-        this.doNotify({ message: `${user.alias} has left.` });
-    }
-
-    willUpdatePublicTitle (from) {
-        let user = from.findNetworkComponent('User');
-
-        // not an admin, don't allow change
-        if (!user.isAdmin()) return false;
-    }
-
-    updateUsers () {
-        let users = this.users.map(_ => { alias: _.alias });
-        this.setPublicState({ users });
+    onMessage ({ user, message }) {
+        // update view: user.alias + message
     }
 }
 
-export default { ChatRoom, ChatRoomServer };
+class ChatRoomS extends ChatRoom {
+}
+
+export default {
+    ChatRoom,
+    ChatRoomS
+}

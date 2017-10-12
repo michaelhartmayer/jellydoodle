@@ -1,15 +1,33 @@
 // network
-import SocketIONetworkServer from './Network/SocketIONetworkServer';
+import SocketIONetworkServer from './Network/SocketIOClientNetwork';
+
+// network collection
+import { NetworkCollection } from 'jellydoodle';
 
 // network components
-import { ChatRoomServer } from './NetworkComponents/ChatRoom';
+import { ChatRoom } from './NetworkComponents/ChatRoom';
+import { AuthorizationS } from './NetworkComponents/Authorization';
 
 // build network
-const chatRoomServer = new SocketIONetworkServer(/* config */);
-const chatRoom       = new ChatRoomServer();
+let network = new SocketIONetworkServer(/* settings */);
 
-// hook up chat room to network
-chatRoomServer.registerNetworkComponent('ChatRoom', chatRoom);
+// generate some chat rooms
+network.mount('Rooms', NetworkCollection({ 
+    // type of chat room
+    of: ChatRoom, 
+    // prevent rooms from being added or removed
+    locked: true, 
+    // room models
+    with: [
+        { title: 'Casual' },
+        { title: 'Singles' },
+        { title: 'Movies and Shows' },
+        { title: 'Friends' }
+    ]
+});
 
-// start server
-chatRoomServer.online(_ => console.log('ChatRoom Online!'));
+// mount an auth component
+network.mount('Auth', new AuthorizationS());
+
+// bring server online network
+network.online();

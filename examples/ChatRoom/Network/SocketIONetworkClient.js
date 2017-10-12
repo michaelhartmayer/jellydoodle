@@ -1,18 +1,14 @@
 import Network from '../../../src/Network';
 
 class SocketIONetworkClient extends Network {
-    constructor() {
-        super(arguments);
-        console.client('Starting Client Network..', socket); 
-    }
-
-    on (channel, event, message) {
-
-    }
-
-    emit (channel, event, message) {
-
-    }
+    components: [
+        ChatRoom,
+        ChatUser
+    ]
 }
 
 export default SocketIOServerNetworkClient;
+
+const notify = nwChatUser => console.log(nwChatUser)
+
+ChatUser.map()
