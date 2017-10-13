@@ -1,0 +1,21 @@
+{
+  "name": "jellydoodle-example-simplechat",
+  "version": "1.0.0",
+  "description": "JellyDoodle Example: SimpleChat",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon --exec babel-node -- server.js",
+    "precompile": "browserify client.js -o ./client/js/app.js -t [ babelify ]"
+  },
+  "author": "Michael Hartmayer",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.11.4",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babelify": "^7.3.0"
+  }
+}
