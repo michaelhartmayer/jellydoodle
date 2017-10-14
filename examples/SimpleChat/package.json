@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "proto": "browserify test.js -t [ babelify ] -o test.b.js && node test.b.js",
     "start": "nodemon --exec babel-node -- server.js",
     "precompile": "browserify client.js -o ./client/js/app.js -t [ babelify ]"
   },

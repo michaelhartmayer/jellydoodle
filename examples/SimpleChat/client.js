@@ -26,3 +26,5 @@ document.querySelector('#input').addEventListener('change', evt => {
     // clear box
     evt.target.value = '';
 });
+
+window.chatRoom = chatRoom

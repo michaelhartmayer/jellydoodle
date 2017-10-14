@@ -1,4 +1,5 @@
-//import { Network } from 'jellydoodle';
+import Network from './Network';
+
 const path    = require('path');
 const express = require('express');
 const app     = express();
@@ -8,39 +9,41 @@ const io      = require('socket.io')(server);
 // set path for express
 app.use(express.static(path.join(__dirname, '../client')));
 
-class Network {
-    constructor () {
-        this._mounted = {};
-    }
-
-    mount (nid, ncInstance) {
-        this._mounted[nid] = ncInstance;
-        ncInstance._network = this;
-
-        console.log('Mounted:', nid);
-    }
-
-    unmount (ncInstanceOrId) {
-        // detect
-    }
-}
-
 class SocketIOServerNetwork extends Network {
-    constructor () {
-        super();
-        io.on('connection', c => console.log('Connection!'))
+    namespace = 'SocketIONetworkMessage'
+
+    constructor (settings = { port: 3000 }) {
+        super(arguments);
+
+        // store settings
+        this._settings = settings;
+
+        // add-remove as node
+        io.on('connection', sck => {
+            // node
+            const node = this.addNetworkNode(sck.id, sck);
+
+            // handle network message
+            sck.on(this.namespace, packet => this.routeNetworkMessage(node, packet));
+
+            // handle disconnect
+            sck.on('disconnect', _ => this.removeNetworkNode(node));
+        });
     }
 
-    on (message) {
-
-    }
-
-    emit (message, payload) {
-        io.emit(message, payload);
+    emit (to, packet) {
+        to.node.emit(this.namespace, packet);
     }
 
     online () {
-        server.listen(3000);
+        // super 
+        super.online();
+
+        // listen
+        server.listen(this._settings.port);
+
+        // log
+        console.log('> Listening on Port ' + this._settings.port);
     }
 }
 

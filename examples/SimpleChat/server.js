@@ -5,7 +5,12 @@ import SimpleChat            from './NetworkComponents/SimpleChat';
 const server = new SocketIOServerNetwork();
 
 // mount chat room
-server.mount('ChatRoom', new SimpleChat());
+server.mount('ChatRoom', new SimpleChat({
+    onMessage: message => {
+        console.log('onMessage:', message);
+    }
+}));
 
 // bring server online
 server.online();
+
