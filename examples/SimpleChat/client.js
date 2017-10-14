@@ -12,7 +12,7 @@ const chatRoom = new SimpleChat({
         const el = document.querySelector('.buffer')
 
         // add messasge
-        el.innerHTML += `<div class="chat-text">${message}</div>`;
+        el.innerHTML += `<div class='chat-text'>${message}</div>`;
 
         // auto scroll (arbitrary, dynamic later)
         el.scrollTop = 99999999;
@@ -33,5 +33,3 @@ document.querySelector('#input').addEventListener('change', evt => {
     // clear box
     evt.target.value = '';
 });
-
-window.chatRoom = chatRoom

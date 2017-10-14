@@ -32,6 +32,7 @@ class SocketIOServerNetwork extends Network {
     }
 
     emit (to, packet) {
+        if (!to) { console.error('ERROR: emit() failed.', packet); return; }
         to.node.emit(this.namespace, packet);
     }
 

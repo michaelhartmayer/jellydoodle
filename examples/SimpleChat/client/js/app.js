@@ -325,7 +325,7 @@ var SimpleChat = function (_NetworkComponent) {
             args[_key] = arguments[_key];
         }
 
-        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = SimpleChat.__proto__ || Object.getPrototypeOf(SimpleChat)).call.apply(_ref, [this].concat(args))), _this), _this.events = ['message', 'alert'], _temp), _possibleConstructorReturn(_this, _ret);
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = SimpleChat.__proto__ || Object.getPrototypeOf(SimpleChat)).call.apply(_ref, [this].concat(args))), _this), _this.events = ['message'], _temp), _possibleConstructorReturn(_this, _ret);
     }
 
     return SimpleChat;
@@ -357,7 +357,7 @@ var chatRoom = new _SimpleChat2.default({
         var el = document.querySelector('.buffer');
 
         // add messasge
-        el.innerHTML += '<div class="chat-text">' + message + '</div>';
+        el.innerHTML += '<div class=\'chat-text\'>' + message + '</div>';
 
         // auto scroll (arbitrary, dynamic later)
         el.scrollTop = 99999999;
@@ -378,7 +378,5 @@ document.querySelector('#input').addEventListener('change', function (evt) {
     // clear box
     evt.target.value = '';
 });
-
-window.chatRoom = chatRoom;
 
 },{"./Network/SocketIOClientNetwork":2,"./NetworkComponents/SimpleChat":4}]},{},[5]);
