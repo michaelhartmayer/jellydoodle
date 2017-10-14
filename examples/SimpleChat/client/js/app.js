@@ -102,7 +102,7 @@ var Network = function () {
             this._resources[ncid] = ncInstance;
 
             // log
-            // console.log('Mounted:', nid, 'as', ncInstance._ncid);
+            console.log('Mounted:', nid, 'as', ncInstance._ncid);
         }
     }, {
         key: 'unmount',
@@ -113,42 +113,6 @@ var Network = function () {
     }]);
 
     return Network;
-}();
-
-Network.Packet = function () {
-    function Packet(from, data) {
-        _classCallCheck(this, Packet);
-
-        this._from = null;
-        this._data = {
-            type: null,
-            event: null,
-            route: function route(_) {}
-        };
-
-        this._from = from;
-        this._data = Object.assign({}, this._data, data);
-    }
-
-    // describes origin
-
-
-    // describes payload
-
-
-    _createClass(Packet, [{
-        key: 'data',
-        get: function get() {
-            return this._data;
-        }
-    }, {
-        key: 'from',
-        get: function get() {
-            return this._from;
-        }
-    }]);
-
-    return Packet;
 }();
 
 exports.default = Network;
@@ -361,7 +325,7 @@ var SimpleChat = function (_NetworkComponent) {
             args[_key] = arguments[_key];
         }
 
-        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = SimpleChat.__proto__ || Object.getPrototypeOf(SimpleChat)).call.apply(_ref, [this].concat(args))), _this), _this.events = ['message'], _temp), _possibleConstructorReturn(_this, _ret);
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = SimpleChat.__proto__ || Object.getPrototypeOf(SimpleChat)).call.apply(_ref, [this].concat(args))), _this), _this.events = ['message', 'alert'], _temp), _possibleConstructorReturn(_this, _ret);
     }
 
     return SimpleChat;
@@ -389,7 +353,14 @@ var client = new _SocketIOClientNetwork2.default();
 var chatRoom = new _SimpleChat2.default({
     // handle 'message' event
     onMessage: function onMessage(message) {
-        document.querySelector('.buffer').innerHTML += '<div>' + message + '</div>';
+        // select
+        var el = document.querySelector('.buffer');
+
+        // add messasge
+        el.innerHTML += '<div class="chat-text">' + message + '</div>';
+
+        // auto scroll (arbitrary, dynamic later)
+        el.scrollTop = 99999999;
     }
 });
 

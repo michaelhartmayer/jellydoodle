@@ -73,7 +73,7 @@ class Network {
         this._resources[ncid] = ncInstance;
 
         // log
-        // console.log('Mounted:', nid, 'as', ncInstance._ncid);
+        console.log('Mounted:', nid, 'as', ncInstance._ncid);
     }
 
     unmount (ncInstanceOrId) {
@@ -82,30 +82,5 @@ class Network {
     online () {
     }
 }
-
-Network.Packet = class Packet {
-    constructor (from, data) {
-        this._from = from;
-        this._data = Object.assign({}, this._data, data);
-    }
-
-    // describes origin
-    _from = null
-
-    // describes payload
-    _data = {
-        type:  null,
-        event: null,
-        route: _ => {}
-    }
-
-    get data () {
-        return this._data;
-    }
-
-    get from () {
-        return this._from;
-    }
-};
 
 export default Network;

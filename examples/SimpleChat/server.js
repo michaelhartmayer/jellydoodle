@@ -7,7 +7,7 @@ const server = new SocketIOServerNetwork();
 // mount chat room
 server.mount('ChatRoom', new SimpleChat({
     onMessage: message => {
-        console.log('onMessage:', message);
+        console.log('onMessage ->', message);
     }
 }));
 

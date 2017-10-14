@@ -8,7 +8,14 @@ const client = new SocketIOClientNetwork();
 const chatRoom = new SimpleChat({
     // handle 'message' event
     onMessage: message => {
-        document.querySelector('.buffer').innerHTML += `<div>${message}</div>`;
+        // select
+        const el = document.querySelector('.buffer')
+
+        // add messasge
+        el.innerHTML += `<div class="chat-text">${message}</div>`;
+
+        // auto scroll (arbitrary, dynamic later)
+        el.scrollTop = 99999999;
     }
 });
 

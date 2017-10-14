@@ -2,7 +2,7 @@
 import NetworkComponent from './NetworkComponent';
 
 class SimpleChat extends NetworkComponent {
-    events = ['message']
+    events = ['message', 'alert']
 }
 
 export default SimpleChat;
